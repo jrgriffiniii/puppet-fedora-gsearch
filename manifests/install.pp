@@ -2,7 +2,7 @@
 #
 # Class for managing the installation process of Fedora Generic Search
 #
-class fedora_gsearch::install inherits fedora_gsearch {
+class fedoragsearch::install inherits fedoragsearch {
 
   package { 'ant':
 
@@ -17,20 +17,20 @@ class fedora_gsearch::install inherits fedora_gsearch {
 
   exec { 'fedoragsearch_deploy':
 
-    command => "/usr/bin/unzip /tmp/fedoragsearch.zip fedoragsearch.war -d ${fedora_gsearch::servlet_webapps_dir_path}",
+    command => "/usr/bin/unzip /tmp/fedoragsearch.zip fedoragsearch.war -d ${fedoragsearch::servlet_webapps_dir_path}",
     require => Exec['fedoragsearch_download']
   }
   
   file_line { 'fedoragsearch_fedora_add_user':
 
-    path => "${fedora_gsearch::fedora_home}/server/config/fedora-users.xml",
+    path => "${fedoragsearch::fedora_home}/server/config/fedora-users.xml",
     line => template('fedoragsearch/fedora-users.xml.erb')
   }
 
   exec { 'fedoragsearch_insert_properties':
     
-    command => "/usr/bin/sed -i 's#property file=\"fgsconfig-basic.properties#property file=\"fgsconfig-basic-for-islandora.properties#' ${fedora_gsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig/fgsconfig-basic.xml",
-    unless => "/usr/bin/grep -q 'for-islandora' ${fedora_gsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig/fgsconfig-basic.xml",
+    command => "/usr/bin/sed -i 's#property file=\"fgsconfig-basic.properties#property file=\"fgsconfig-basic-for-islandora.properties#' ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig/fgsconfig-basic.xml",
+    unless => "/usr/bin/grep -q 'for-islandora' ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig/fgsconfig-basic.xml",
     require => Exec['fedoragsearch_deploy']
   }
 
@@ -43,7 +43,7 @@ class fedora_gsearch::install inherits fedora_gsearch {
 
   exec { 'fedoragsearch_solr_schema_deploy':
 
-    command => "/bin/cp ${fedora_gsearch::servlet_webapps_dir_path}/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/conf/schema-${$fedora_gsearch::solr_version}-for-fgs-${$fedora_gsearch::version}.xml ${fedora_gsearch::install_dir_path}/${$fedora_gsearch::solr_index_name}/conf/schema.xml",
+    command => "/bin/cp ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/conf/schema-${fedoragsearch::solr_version}-for-fgs-${fedoragsearch::version}.xml ${fedoragsearch::install_dir_path}/${fedoragsearch::solr_index_name}/conf/schema.xml",
     require => Exec['fedoragsearch_ant_build']
   }
 }
