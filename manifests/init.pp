@@ -20,26 +20,26 @@
 #
 class fedoragsearch (
 
-  $fedoragsearch::download_url = params_lookup( 'download_url' ),
-  $fedoragsearch::version = params_lookup( 'version' ),
+  $download_url = params_lookup( 'download_url' ),
+  $version = params_lookup( 'version' ),
 
-  $fedoragsearch::fedora_user_name = params_lookup( 'fedora_user_name' ),
-  $fedoragsearch::fedora_user_pass = params_lookup( 'fedora_user_pass' ),
-  $fedoragsearch::fedora_admin_user_name = params_lookup( 'fedora_admin_user_name' ),
-  $fedoragsearch::fedora_admin_user_pass = params_lookup( 'fedora_admin_user_pass' ),
-  $fedoragsearch::fedora_repo_name = params_lookup( 'fedora_repo_name' ),
-  $fedoragsearch::fedora_version = params_lookup( 'fedora_version' ),
-  $fedoragsearch::fedora_home = params_lookup( 'fedora_home' ),
+  $fedora_user_name = params_lookup( 'fedora_user_name' ),
+  $fedora_user_pass = params_lookup( 'fedora_user_pass' ),
+  $fedora_admin_user_name = params_lookup( 'fedora_admin_user_name' ),
+  $fedora_admin_user_pass = params_lookup( 'fedora_admin_user_pass' ),
+  $fedora_repo_name = params_lookup( 'fedora_repo_name' ),
+  $fedora_version = params_lookup( 'fedora_version' ),
+  $fedora_home = params_lookup( 'fedora_home' ),
 
-  $fedoragsearch::servlet_engine = params_lookup( 'servlet_engine' ),
-  $fedoragsearch::servlet_webapps_dir_path = params_lookup( 'servlet_webapps_dir_path' ),
-  $fedoragsearch::servlet_context_dir_path = params_lookup( 'servlet_context_dir_path' ),
-  $fedoragsearch::servlet_host = params_lookup( 'servlet_host' ),
-  $fedoragsearch::servlet_port = params_lookup( 'servlet_port' ),
+  $servlet_engine = params_lookup( 'servlet_engine' ),
+  $servlet_webapps_dir_path = params_lookup( 'servlet_webapps_dir_path' ),
+  $servlet_context_dir_path = params_lookup( 'servlet_context_dir_path' ),
+  $servlet_host = params_lookup( 'servlet_host' ),
+  $servlet_port = params_lookup( 'servlet_port' ),
 
-  $fedoragsearch::solr_version = params_lookup( 'solr_version' ),
-  $fedoragsearch::install_dir_path = params_lookup( 'install_dir_path' ),
-  $fedoragsearch::solr_index_name = params_lookup( 'solr_index_name' )
+  $solr_version = params_lookup( 'solr_version' ),
+  $install_dir_path = params_lookup( 'install_dir_path' ),
+  $solr_index_name = params_lookup( 'solr_index_name' )
   
   ) inherits fedoragsearch::params {
 
