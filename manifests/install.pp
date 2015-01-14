@@ -11,13 +11,13 @@ class fedoragsearch::install inherits fedoragsearch {
    
   exec { 'fedoragsearch_download':
     
-    command => "/usr/bin/wget ${fedoragsearch::download_url} -O /tmp/fedoragsearch.zip",
-    unless => '/usr/bin/stat /tmp/fedoragsearch.zip'
+    command => "/usr/bin/env wget ${fedoragsearch::download_url} -O /tmp/fedoragsearch.zip",
+    unless => '/usr/bin/env stat /tmp/fedoragsearch.zip'
   }
 
   exec { 'fedoragsearch_deploy':
 
-    command => "/usr/bin/unzip /tmp/fedoragsearch.zip fedoragsearch.war -d ${fedoragsearch::servlet_webapps_dir_path}",
+    command => "/usr/bin/env unzip /tmp/fedoragsearch.zip fedoragsearch.war -d ${fedoragsearch::servlet_webapps_dir_path}",
     require => Exec['fedoragsearch_download']
   }
   
@@ -29,21 +29,21 @@ class fedoragsearch::install inherits fedoragsearch {
 
   exec { 'fedoragsearch_insert_properties':
     
-    command => "/usr/bin/sed -i 's#property file=\"fgsconfig-basic.properties#property file=\"fgsconfig-basic-for-islandora.properties#' ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig/fgsconfig-basic.xml",
-    unless => "/usr/bin/grep -q 'for-islandora' ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig/fgsconfig-basic.xml",
+    command => "/usr/bin/env sed -i 's#property file=\"fgsconfig-basic.properties#property file=\"fgsconfig-basic-for-islandora.properties#' ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig/fgsconfig-basic.xml",
+    unless => "/usr/bin/env grep -q 'for-islandora' ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig/fgsconfig-basic.xml",
     require => Exec['fedoragsearch_deploy']
   }
 
   exec { 'fedoragsearch_ant_build':
     
-    command => "/usr/bin/ant -f ${fedoragsearch_build}",
-    unless => "/usr/bin/stat ${fedoragsearch_schema}",
+    command => "/usr/bin/env ant -f ${fedoragsearch_build}",
+    unless => "/usr/bin/env stat ${fedoragsearch_schema}",
     require => Package['ant']
   }
 
   exec { 'fedoragsearch_solr_schema_deploy':
 
-    command => "/bin/cp ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/conf/schema-${fedoragsearch::solr_version}-for-fgs-${fedoragsearch::version}.xml ${fedoragsearch::install_dir_path}/${fedoragsearch::solr_index_name}/conf/schema.xml",
+    command => "/usr/bin/env cp ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/conf/schema-${fedoragsearch::solr_version}-for-fgs-${fedoragsearch::version}.xml ${fedoragsearch::install_dir_path}/${fedoragsearch::solr_index_name}/conf/schema.xml",
     require => Exec['fedoragsearch_ant_build']
   }
 }
