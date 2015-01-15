@@ -32,21 +32,27 @@ class fedoragsearch::install inherits fedoragsearch {
   file_line { 'fedoragsearch_fedora_add_user':
 
     path => "${fedoragsearch::fedora_home}/server/config/fedora-users.xml",
-    line => template('fedoragsearch/fedora-users.xml.erb')
+    line => template('fedoragsearch/fedora-users.xml.erb'),
+    after => "      </attribute>
+        </user>",
+    require => Class['::fedora_commons']
   }
 
-  exec { 'fedoragsearch_insert_properties':
+  exec { 'fedoragsearch_ant_update_build':
     
     command => "/usr/bin/env sed -i 's#property file=\"fgsconfig-basic.properties#property file=\"fgsconfig-basic-for-islandora.properties#' ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig/fgsconfig-basic.xml",
     unless => "/usr/bin/env grep -q 'for-islandora' ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig/fgsconfig-basic.xml",
+    tries => 10,
+    try_sleep => 3,
     require => Exec['fedoragsearch_deploy']
   }
 
   exec { 'fedoragsearch_ant_build':
     
-    command => "/usr/bin/env ant -f ${fedoragsearch_build}",
-    unless => "/usr/bin/env stat ${fedoragsearch_schema}",
-    require => Package['ant']
+    command => "/usr/bin/env ant -f fgsconfig-basic.xml",
+    unless => "/usr/bin/env stat ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/conf/schema-${fedoragsearch::solr_version}-for-fgs-${fedoragsearch::version}.xml",
+    cwd => "${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig",
+    require => [ Package['ant'], Exec['fedoragsearch_ant_update_build'] ]
   }
 
   exec { 'fedoragsearch_solr_schema_deploy':
