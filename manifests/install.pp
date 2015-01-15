@@ -51,14 +51,14 @@ class fedoragsearch::install inherits fedoragsearch {
   exec { 'fedoragsearch_ant_build':
     
     command => "/usr/bin/env ant -f fgsconfig-basic.xml",
-    unless => "/usr/bin/env stat ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/conf/schema-${fedoragsearch::solr_version}-for-fgs-${fedoragsearch::version}.xml",
+    unless => "/usr/bin/env stat ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig/configForIslandora/fgsconfigFinal/index/FgsIndex/conf/schema-${fedoragsearch::solr_version}-for-fgs-${fedoragsearch::version}.xml",
     cwd => "${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig",
     require => [ Package['ant'], Exec['fedoragsearch_ant_update_build'] ]
   }
 
   exec { 'fedoragsearch_solr_schema_deploy':
 
-    command => "/usr/bin/env cp ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/conf/schema-${fedoragsearch::solr_version}-for-fgs-${fedoragsearch::version}.xml ${fedoragsearch::install_dir_path}/${fedoragsearch::solr_index_name}/conf/schema.xml",
+    command => "/usr/bin/env cp ${fedoragsearch::servlet_webapps_dir_path}/fedoragsearch/FgsConfig/configForIslandora/fgsconfigFinal/index/FgsIndex/conf/schema-${fedoragsearch::solr_version}-for-fgs-${fedoragsearch::version}.xml ${fedoragsearch::install_dir_path}/${fedoragsearch::solr_index_name}/conf/schema.xml",
     require => Exec['fedoragsearch_ant_build']
   }
 }
