@@ -30,12 +30,9 @@ class fedoragsearch::install inherits fedoragsearch {
     require => Exec['fedoragsearch_decompress']
   }
   
-  file_line { 'fedoragsearch_fedora_add_user':
+  file { "${fedoragsearch::fedora_home}/server/config/fedora-users.xml":
 
-    path => "${fedoragsearch::fedora_home}/server/config/fedora-users.xml",
     line => template('fedoragsearch/fedora-users.xml.erb'),
-    after => "      </attribute>
-        </user>",
     require => Class['::fedora_commons']
   }
 

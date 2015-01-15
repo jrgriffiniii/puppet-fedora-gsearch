@@ -1,5 +1,19 @@
-<user name="<%= @fedora_user_name %>" password="<%= @fedora_user_pass %>">
-  <attribute name="fedoraRole">
-    <value>administrator</value>
-  </attribute>
-</user>
+<?xml version='1.0' ?>
+  <users>
+    <user name="<%= @fedora_admin_user_name %>" password="<%= @fedora_admin_user_pass %>">
+      <attribute name="fedoraRole">
+        <value>administrator</value>
+      </attribute>
+    </user>
+    <user name="fedoraIntCallUser" password="changeme">
+      <attribute name="fedoraRole">
+        <value>fedoraInternalCall-1</value>
+        <value>fedoraInternalCall-2</value>
+      </attribute>
+    </user>
+    <user name="<%= @fedora_user_name %>" password="<%= @fedora_user_pass %>">
+      <attribute name="fedoraRole">
+        <value>administrator</value>
+      </attribute>
+    </user>
+  </users>

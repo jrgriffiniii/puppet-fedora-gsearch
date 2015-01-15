@@ -1,12 +1,12 @@
-configDisplayName=<%= @config_display_name %>
+configDisplayName=<%= @name %>
 gsearchBase=http://localhost:8080
-gsearchAppName=fedoragsearch
+gsearchAppName=<%= @name %>
  
 gsearchUser=<%= @fedora_user_name %>
 gsearchPass=<%= @fedora_user_pass %>
-finalConfigPath=/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes
+finalConfigPath=<%= @servlet_webapps_dir_path %>/<%= @name %>/WEB-INF/classes
  
-logFilePath=/usr/local/fedora/server/logs
+logFilePath=<%= @fedora_home %>/server/logs
 logLevel=DEBUG
 namesOfRepositories=<%= @fedora_repo_name %>
  
@@ -18,9 +18,9 @@ fedoraUser=<%= @fedora_admin_user_name %>
 fedoraPass=<%= @fedora_admin_user_pass %>
 fedoraVersion=<%= @fedora_version %>
  
-objectStoreBase=/usr/local/fedora/data/objectStore
+objectStoreBase=<%= @fedora_home %>/data/objectStore
 indexEngine=Solr
 indexBase=http://localhost:8080/solr
  
-indexDir=/usr/local/fedora/solr/collection1/data/index
+indexDir=<%= @install_dir_path %>/<%= @solr_index_name %>/data/index
 indexingDocXslt=foxmlToSolr
