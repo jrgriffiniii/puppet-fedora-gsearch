@@ -9,7 +9,7 @@ class fedoragsearch::install inherits fedoragsearch {
     ensure => 'installed'
   }
 
-  require(['::java', 'epel', '::tomcat'])
+  require '::java', 'epel', '::tomcat'
    
   exec { 'fedoragsearch_download':
     
