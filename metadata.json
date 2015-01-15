@@ -1,0 +1,23 @@
+{
+    "name": "puppet-fedoragsearch",
+    "version": "0.0.1",
+    "author": "griffinj@lafayette.edu",
+    "license": "GPLv2",
+    "summary": "A Puppet Module for Fedora Commons",
+    "source": "https://github.com/jrgriffiniii/puppet-fedoragsearch",
+    "project_page": "https://github.com/jrgriffiniii/puppet-fedoragsearch",
+    "issues_url": "https://github.com/jrgriffiniii/puppet-fedoragsearch/issues",
+    "tags": [
+        "fedora commons",
+        "fcrepo",
+        "repository",
+	"preservation",
+	"apache solr",
+	"fedora generic search"
+    ],
+    "dependencies": [
+	{ "name": "puppetlabs/java", "version_requirement": "1.2.x" },
+	{ "name": "puppetlabs/tomcat", "version_requirement": "1.2.x" },
+	{ "name": "example42/solr", "version_requirement": "2.0.x" }
+    ]
+}
