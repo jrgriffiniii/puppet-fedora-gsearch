@@ -7,7 +7,7 @@ class fedoragsearch::params {
   $download_url = 'http://downloads.sourceforge.net/fedora-commons/fedoragsearch-2.7.zip'
   $version = '2.7'
 
-  $name = 'fedoragsearch'
+  $app_name = 'fedoragsearch'
 
   $fedora_user_name = 'fgsAdmin'
   $fedora_user_pass = 'secret'
