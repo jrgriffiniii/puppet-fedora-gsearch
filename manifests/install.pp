@@ -8,6 +8,8 @@ class fedoragsearch::install inherits fedoragsearch {
 
     ensure => 'installed'
   }
+
+  require(['::java', 'epel', '::tomcat'])
    
   exec { 'fedoragsearch_download':
     
@@ -15,10 +17,16 @@ class fedoragsearch::install inherits fedoragsearch {
     unless => '/usr/bin/env stat /tmp/fedoragsearch.zip'
   }
 
+  exec { 'fedoragsearch_decompress':
+
+    command => "/usr/bin/env unzip /tmp/fedoragsearch.zip fedoragsearch-2.7/fedoragsearch.war -d /tmp",
+    require => Exec['fedoragsearch_download']
+  }
+
   exec { 'fedoragsearch_deploy':
 
-    command => "/usr/bin/env unzip /tmp/fedoragsearch.zip fedoragsearch.war -d ${fedoragsearch::servlet_webapps_dir_path}",
-    require => Exec['fedoragsearch_download']
+    command => "/usr/bin/env cp /tmp/fedoragsearch-2.7/fedoragsearch.war ${fedoragsearch::servlet_webapps_dir_path}",
+    require => Exec['fedoragsearch_decompress']
   }
   
   file_line { 'fedoragsearch_fedora_add_user':
