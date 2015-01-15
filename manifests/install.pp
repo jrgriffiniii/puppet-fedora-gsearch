@@ -20,7 +20,7 @@ class fedoragsearch::install inherits fedoragsearch {
   # @todo Resolve the redundancy here (this may be invoked twice)
   exec { 'fedoragsearch_decompress':
 
-    command => "/usr/bin/env unzip /tmp/fedoragsearch.zip -o fedoragsearch-2.7/fedoragsearch.war -d /tmp",
+    command => "/usr/bin/env unzip -o /tmp/fedoragsearch.zip fedoragsearch-2.7/fedoragsearch.war -d /tmp",
     require => Exec['fedoragsearch_download']
   }
 
