@@ -32,7 +32,7 @@ class fedoragsearch::install inherits fedoragsearch {
   
   file { "${fedoragsearch::fedora_home}/server/config/fedora-users.xml":
 
-    line => template('fedoragsearch/fedora-users.xml.erb'),
+    content => template('fedoragsearch/fedora-users.xml.erb'),
     require => Class['::fedora_commons']
   }
 
