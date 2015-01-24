@@ -16,8 +16,5 @@
 	"fedora generic search"
     ],
     "dependencies": [
-	{ "name": "puppetlabs/java", "version_requirement": "1.2.x" },
-	{ "name": "puppetlabs/tomcat", "version_requirement": "1.2.x" },
-	{ "name": "example42/solr", "version_requirement": "2.0.x" }
     ]
 }

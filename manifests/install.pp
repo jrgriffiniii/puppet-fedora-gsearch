@@ -1,3 +1,4 @@
+
 # == Class: fedoragsearch::install
 #
 # Class for managing the installation process of Fedora Generic Search
@@ -9,7 +10,7 @@ class fedoragsearch::install inherits fedoragsearch {
     ensure => 'installed'
   }
 
-  require '::java', 'epel', '::tomcat'
+  require '::java', 'epel', '::fedora_commons'
    
   exec { 'fedoragsearch_download':
     
@@ -27,7 +28,7 @@ class fedoragsearch::install inherits fedoragsearch {
   exec { 'fedoragsearch_deploy':
 
     command => "/usr/bin/env cp /tmp/fedoragsearch-2.7/fedoragsearch.war ${fedoragsearch::servlet_webapps_dir_path}",
-    require => Exec['fedoragsearch_decompress']
+    require => [ Class['::fedora_commons'], Exec['fedoragsearch_decompress'] ]
   }
   
   file { "${fedoragsearch::fedora_home}/server/config/fedora-users.xml":
